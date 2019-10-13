@@ -74,7 +74,7 @@ namespace FunctionalTests
         }
 
         [TestMethod]
-        public void NoneOfT1_DoesNotEquals_NoneOfT2()
+        public void NoneOfT1_DoesNotEqual_NoneOfT2()
         {
             var none1 = new None<int>();
             var none2 = new None<double>();

@@ -1,11 +1,7 @@
 ﻿using Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FunctionalTests
 {
@@ -52,6 +48,18 @@ namespace FunctionalTests
             Assert.IsTrue(some1 == some2);
             Assert.IsFalse(some1 != some2);
         }
+
+        [TestMethod]
+        public void Equals_NonEquivalentInstance_IsFalse()
+        {
+            var some1 = GetSampleValue1();
+            var some2 = GetOtherValue();
+
+            Assert.AreNotEqual(some1, some2);
+            Assert.IsFalse(some1.Equals(some2));
+            Assert.IsFalse(some1 == some2);
+            Assert.IsTrue(some1 != some2);
+        }
     }
 
     [TestClass]
@@ -63,18 +71,18 @@ namespace FunctionalTests
     }
 
     [TestClass]
-    public class SomeOfObjectTests : AbstractSomeEqualityTests<MyClass>
+    public class SomeOfObjectTests : AbstractSomeEqualityTests<MyEquatableType>
     {
-        protected override Some<MyClass> GetOtherValue() => new MyClass(4);
-        protected override Some<MyClass> GetSampleValue1() => new MyClass(8);
-        protected override Some<MyClass> GetSampleValue2() => new MyClass(8);
+        protected override Some<MyEquatableType> GetOtherValue() => new MyEquatableType(4);
+        protected override Some<MyEquatableType> GetSampleValue1() => new MyEquatableType(8);
+        protected override Some<MyEquatableType> GetSampleValue2() => new MyEquatableType(8);
     }
 
-    public class MyClass : IEquatable<MyClass>
+    public class MyEquatableType : IEquatable<MyEquatableType>
     {
         public int Value { get; }
-        public MyClass(int value) => Value = value;
+        public MyEquatableType(int value) => Value = value;
 
-        public bool Equals([AllowNull] MyClass other) => Value.Equals(other.Value);
+        public bool Equals([AllowNull] MyEquatableType other) => Value.Equals(other.Value);
     }
 }
