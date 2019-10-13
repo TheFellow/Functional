@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace FunctionalTests
+namespace FunctionalTests.Option
 {
     [TestClass]
     public abstract class AbstractSomeEqualityTests<T>

@@ -1,7 +1,7 @@
 using Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FunctionalTests
+namespace FunctionalTests.Option
 {
     [TestClass]
     public class NoneTests
