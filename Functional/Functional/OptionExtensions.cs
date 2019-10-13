@@ -26,5 +26,19 @@ namespace Functional
                 : whenNone();
 
         #endregion
+
+        #region Map
+
+        public static Option<TNew> Map<T, TNew>(this Option<T> option, Func<T, TNew> map) =>
+            option is Some<T> some
+                ? (Option<TNew>)map(some.Content)
+                : new None<TNew>();
+
+        public static Option<TNew> Map<T, TNew>(this Option<T> option, Func<T, Option<TNew>> map) =>
+            option is Some<T> some
+                ? (Option<TNew>)map(some.Content)
+                : new None<TNew>();
+
+        #endregion
     }
 }

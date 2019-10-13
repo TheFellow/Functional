@@ -91,5 +91,63 @@ namespace FunctionalTests
         }
 
         #endregion
+
+        #region Map Tests
+
+        [TestMethod]
+        public void MapOneTrackFunction_OfSome_MapsToNewSome()
+        {
+            Option<MyType1> option = new MyType1();
+
+            Option<string> result = option.Map(mt => mt.ToString());
+
+            if (result is Some<string> some)
+            {
+                Assert.AreEqual(nameof(MyType1), some.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapOneTrackFunction_OfNone_MapsToNewNone()
+        {
+            Option<MyType1> option = None.Value;
+
+            Option<string> result = option.Map(mt => mt.ToString());
+
+            Assert.IsInstanceOfType(result, typeof(None<string>));
+        }
+
+        [TestMethod]
+        public void MapTwoTrackFunction_OfSome_MapsToNewSome()
+        {
+            Option<MyType1> option = new MyType1();
+
+            Option<string> result = option.Map(mt => mt.ToString().NoneIfNull());
+
+            if (result is Some<string> some)
+            {
+                Assert.AreEqual(nameof(MyType1), some.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapTwoTrackFunction_OfNone_MapsToNewNone()
+        {
+            Option<MyType1> option = None.Value;
+
+            Option<string> result = option.Map(mt => mt.ToString().NoneIfNull());
+
+            Assert.IsInstanceOfType(result, typeof(None<string>));
+        }
+
+        #endregion
     }
 }
