@@ -23,7 +23,7 @@ namespace Functional
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is Some<T> && Equals(obj);
+            return obj is Some<T> some && Equals(some);
         }
 
         public override int GetHashCode() => EqualityComparer<T>.Default.GetHashCode(Content);

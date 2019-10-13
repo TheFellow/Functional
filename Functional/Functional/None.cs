@@ -14,6 +14,10 @@ namespace Functional
 
         public static bool operator ==([AllowNull] None<T> a, [AllowNull] None<T> b) => (a is null && b is null) || (a?.Equals(b) ?? false);
         public static bool operator !=([AllowNull] None<T> a, [AllowNull] None<T> b) => !(a == b);
+        public static bool operator ==([AllowNull] None<T> a, [AllowNull] None b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator !=([AllowNull] None<T> a, [AllowNull] None b) => !(a == b);
+        public static bool operator ==([AllowNull] None a, [AllowNull] None<T> b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator !=([AllowNull] None a, [AllowNull] None<T> b) => !(a == b);
     }
 
     public sealed class None : IEquatable<None>
@@ -24,7 +28,7 @@ namespace Functional
 
         public override string ToString() => "None";
         
-        public bool Equals([AllowNull] None other) => true;
+        public bool Equals([AllowNull] None other) => !(other is null);
         public override bool Equals(object? obj) =>
             !(obj is null) && ((obj is None) || this.IsGenericNone(obj.GetType()));
         public override int GetHashCode() => 0;
