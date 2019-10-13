@@ -40,5 +40,18 @@ namespace Functional
                 : new None<TNew>();
 
         #endregion
+
+        #region When
+
+        public static Option<T> When<T>(this T obj, bool condition) =>
+            condition ? (Option<T>)obj : None.Value;
+
+        public static Option<T> When<T>(this T obj, Func<bool> predicate) =>
+            predicate() ? (Option<T>)obj : None.Value;
+
+        public static Option<T> When<T>(this T obj, Func<T, bool> predicate) =>
+            predicate(obj) ? (Option<T>)obj : None.Value;
+
+        #endregion
     }
 }
