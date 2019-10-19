@@ -8,13 +8,6 @@ namespace Functional
 {
     public static class OptionExtensions
     {
-        public static Option<T> NoneIfNull<T>(this T obj) =>
-            !(obj is null)
-                ? (Option<T>)new Some<T>(obj)
-                : new None<T>();
-
-        #region Reduce
-
         public static T Reduce<T>(this Option<T> option, T whenNone) =>
             option is Some<T> some
                 ? some.Content
@@ -25,10 +18,6 @@ namespace Functional
                 ? some.Content
                 : whenNone();
 
-        #endregion
-
-        #region Map
-
         public static Option<TNew> Map<T, TNew>(this Option<T> option, Func<T, TNew> map) =>
             option is Some<T> some
                 ? (Option<TNew>)map(some.Content)
@@ -36,22 +25,7 @@ namespace Functional
 
         public static Option<TNew> Map<T, TNew>(this Option<T> option, Func<T, Option<TNew>> map) =>
             option is Some<T> some
-                ? (Option<TNew>)map(some.Content)
+                ? map(some.Content)
                 : new None<TNew>();
-
-        #endregion
-
-        #region When
-
-        public static Option<T> When<T>(this T obj, bool condition) =>
-            condition ? (Option<T>)obj : None.Value;
-
-        public static Option<T> When<T>(this T obj, Func<bool> predicate) =>
-            predicate() ? (Option<T>)obj : None.Value;
-
-        public static Option<T> When<T>(this T obj, Func<T, bool> predicate) =>
-            predicate(obj) ? (Option<T>)obj : None.Value;
-
-        #endregion
     }
 }
