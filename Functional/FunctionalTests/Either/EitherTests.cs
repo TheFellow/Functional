@@ -1,10 +1,5 @@
 ﻿using Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FunctionalTests.Either
 {
@@ -18,7 +13,7 @@ namespace FunctionalTests.Either
 
             if (either is Left<int, string> left)
             {
-                Assert.AreEqual(4, left.Content);
+                Assert.AreEqual(4, left);
             }
             else
             {
@@ -33,7 +28,7 @@ namespace FunctionalTests.Either
 
             if (either is Right<int, string> right)
             {
-                Assert.AreEqual("Hello", right.Content);
+                Assert.AreEqual("Hello", right);
             }
             else
             {
