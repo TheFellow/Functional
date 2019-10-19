@@ -57,7 +57,6 @@ namespace FunctionalTests.Option
             {
                 Assert.Fail();
             }
-
         }
 
         [TestMethod]
