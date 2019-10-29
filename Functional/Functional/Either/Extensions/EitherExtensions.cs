@@ -14,5 +14,10 @@ namespace Functional
             either is Right<TLeft, TRight> right
                 ? (Either<TLeft, TNewRight>)map(right.Content)
                 : (TLeft)(Left<TLeft, TRight>)either;
+
+        public static Either<TLeft, TNewRight> Map<TLeft, TRight, TNewRight>(this Either<TLeft, TRight> either, Func<TRight, Either<TLeft, TNewRight>> map) =>
+            either is Right<TLeft, TRight> right
+                ? map(right)
+                : (TLeft)(Left<TLeft, TRight>)either;
     }
 }
