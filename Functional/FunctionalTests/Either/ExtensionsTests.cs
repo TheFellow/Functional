@@ -25,5 +25,25 @@ namespace FunctionalTests.Either
 
             Assert.AreEqual("Replacement", result);
         }
+
+        [TestMethod]
+        public void ReduceWithFunc_WhenRight_ReturnsRight()
+        {
+            Either<int, string> either = "Hello World";
+
+            var result = either.Reduce(() => "Replacement");
+
+            Assert.AreEqual("Hello World", result);
+        }
+
+        [TestMethod]
+        public void ReduceWithFunc_WhenLeft_ReturnsReplacement()
+        {
+            Either<int, string> either = 4;
+
+            var result = either.Reduce(() => "Replacement");
+
+            Assert.AreEqual("Replacement", result);
+        }
     }
 }
