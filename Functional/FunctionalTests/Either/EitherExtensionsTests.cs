@@ -1,7 +1,5 @@
 ﻿using Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 
 namespace FunctionalTests.Either
 {
