@@ -46,6 +46,23 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
+        public void FirstOrDefaultOfStruct_WhenEmpty_ReturnsLeftLazy()
+        {
+            var seq = Enumerable.Empty<int>();
+
+            var result = seq.FirstOrDefault(() => empty);
+
+            if (result is Left<string, int> left)
+            {
+                Assert.AreEqual(empty, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
         public void FirstOrDefaultOfClass_WhenNonEmpty_ReturnsRight()
         {
             var seq = new[] { new Item { Value = 1 }, new Item { Value = 2 } };
@@ -68,6 +85,23 @@ namespace FunctionalTests.Either
             var seq = new Item[] { };
 
             var result = seq.FirstOrDefault(empty);
+
+            if (result is Left<string, Item> left)
+            {
+                Assert.AreEqual(empty, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void FirstOrDefaultOfClass_WhenEmpty_ReturnsLeftLazy()
+        {
+            var seq = new Item[] { };
+
+            var result = seq.FirstOrDefault(() => empty);
 
             if (result is Left<string, Item> left)
             {

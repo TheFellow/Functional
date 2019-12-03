@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Functional
 {
@@ -12,5 +9,10 @@ namespace Functional
             seq.FirstOrNone() is Some<TRight> some
                 ? (Either<TLeft, TRight>)some.Content
                 : whenEmpty;
+
+        public static Either<TLeft, TRight> FirstOrDefault<TLeft, TRight>(this IEnumerable<TRight> seq, Func<TLeft> whenEmpty) =>
+            seq.FirstOrNone() is Some<TRight> some
+                ? (Either<TLeft, TRight>)some.Content
+                : whenEmpty();
     }
 }
