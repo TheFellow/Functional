@@ -125,5 +125,32 @@ namespace FunctionalTests.Option
 
         #endregion
 
+        #region Tee Tests
+
+        [TestMethod]
+        public void Tee_WhenSome_CallsActionWithContentAndPassesOption()
+        {
+            Option<int> option = 8;
+
+            int value = 0;
+            var result = option.Tee(i => value = i);
+
+            Assert.AreEqual(option, result);
+            Assert.AreEqual(8, value);
+        }
+
+        [TestMethod]
+        public void Tee_WhenNone_DoesNotCallActionAndPassesOption()
+        {
+            Option<int> option = None.Value;
+
+            int value = 0;
+            var result = option.Tee(i => value = i);
+
+            Assert.AreEqual(option, result);
+            Assert.AreEqual(0, value);
+        }
+
+        #endregion
     }
 }

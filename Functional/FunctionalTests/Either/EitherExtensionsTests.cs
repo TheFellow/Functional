@@ -8,6 +8,8 @@ namespace FunctionalTests.Either
     [TestClass]
     public class EitherExtensionsTests
     {
+        #region Reduce Tests
+
         [TestMethod]
         public void Reduce_WhenRight_ReturnsRight()
         {
@@ -47,6 +49,10 @@ namespace FunctionalTests.Either
 
             Assert.AreEqual("Replacement", result);
         }
+
+        #endregion
+
+        #region Map Tests
 
         [TestMethod]
         public void MapOneTrackFunction_WhenRight_AppliesMap()
@@ -138,5 +144,35 @@ namespace FunctionalTests.Either
                 Assert.Fail();
             }
         }
+
+        #endregion
+
+        #region Tee Tests
+
+        [TestMethod]
+        public void Tee_WhenRight_CallsActionWithContentAndPassesEither()
+        {
+            Either<int, string> either = "Hello World";
+
+            string value = string.Empty;
+            var result = either.Tee(s => value = s);
+
+            Assert.AreEqual("Hello World", value);
+            Assert.AreEqual(either, result);
+        }
+
+        [TestMethod]
+        public void Tee_WhenLeft_DoesNotCallActionAndPassesEither()
+        {
+            Either<int, string> either = 4;
+
+            string value = string.Empty;
+            var result = either.Tee(s => value = s);
+
+            Assert.AreEqual(string.Empty, value);
+            Assert.AreEqual(either, result);
+        }
+
+        #endregion
     }
 }

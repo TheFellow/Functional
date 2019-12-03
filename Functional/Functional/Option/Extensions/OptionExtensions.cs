@@ -23,5 +23,12 @@ namespace Functional
             option is Some<T> some
                 ? map(some.Content)
                 : new None<TNew>();
+
+        public static Option<T> Tee<T>(this Option<T> option, Action<T> action)
+        {
+            if (option is Some<T> some)
+                action(some.Content);
+            return option;
+        }
     }
 }

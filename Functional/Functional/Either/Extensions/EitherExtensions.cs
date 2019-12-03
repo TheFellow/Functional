@@ -19,5 +19,12 @@ namespace Functional
             either is Right<TLeft, TRight> right
                 ? map(right)
                 : (TLeft)(Left<TLeft, TRight>)either;
+
+        public static Either<TLeft, TRight> Tee<TLeft, TRight>(this Either<TLeft, TRight> either, Action<TRight> action)
+        {
+            if (either is Right<TLeft, TRight> right)
+                action(right.Content);
+            return either;
+        }
     }
 }
