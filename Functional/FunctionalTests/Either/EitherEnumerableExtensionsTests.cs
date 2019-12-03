@@ -112,5 +112,56 @@ namespace FunctionalTests.Either
                 Assert.Fail();
             }
         }
+
+        [TestMethod]
+        public void FirstOrDefault_WithMatchingPredicate_ReturnsRight()
+        {
+            var seq = Enumerable.Range(4, 8);
+
+            var result = seq.FirstOrDefault(i => i % 2 == 1, empty);
+
+            if (result is Right<string, int> right)
+            {
+                Assert.AreEqual(5, right.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void FirstOrDefault_WithFailingPredicate_ReturnsLeft()
+        {
+            var seq = Enumerable.Range(4, 8);
+
+            var result = seq.FirstOrDefault(i => i > 20, empty);
+
+            if (result is Left<string, int> left)
+            {
+                Assert.AreEqual(empty, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void FirstOrDefault_WithFailingPredicate_ReturnsLeftLazy()
+        {
+            var seq = Enumerable.Range(4, 8);
+
+            var result = seq.FirstOrDefault(i => i > 20, () => empty);
+
+            if (result is Left<string, int> left)
+            {
+                Assert.AreEqual(empty, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
     }
 }
