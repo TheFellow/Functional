@@ -1,5 +1,6 @@
 ﻿using Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace FunctionalTests.Either
@@ -81,16 +82,22 @@ namespace FunctionalTests.Either
             }
         }
 
+        private static Either<int, char> MapOneToTwo(string str) =>
+            str.StartsWith('H')
+                ? (Either<int, char>)str[0]
+                : str.Length;
+
+
         [TestMethod]
         public void MapTwoTrackFunction_WhenRightReturnsNewRight_AppliesMap()
         {
             Either<int, string> either = "Hello World";
 
-            var result = either.Map(s => s.First(c => char.ToUpperInvariant(c) == c) == 'H' ? '1' : '0');
+            var result = either.Map(MapOneToTwo);
 
             if (result is Right<int, char> right)
             {
-                Assert.AreEqual('1', right.Content);
+                Assert.AreEqual('H', right.Content);
             }
             else
             {
@@ -99,15 +106,15 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void MapTwoTrackFunction_WhenRightReturnsLeft_AppliesMap()
+        public void MapTwoTrackFunction_WhenRightReturnsLeft_ReturnsLeft()
         {
             Either<int, string> either = "hello World";
 
-            var result = either.Map(s => s.First(c => char.ToUpperInvariant(c) == 'H') == 'H' ? '1' : '0');
+            var result = either.Map(MapOneToTwo);
 
-            if (result is Right<int, char> right)
+            if (result is Left<int, char> left)
             {
-                Assert.AreEqual('0', right.Content);
+                Assert.AreEqual(11, left.Content);
             }
             else
             {
@@ -116,11 +123,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void MapTwoTrackFunction_WhenLeft_DoesNotApplyFunction()
+        public void MapTwoTrackFunction_WhenLeft_DoesNotApplyMap()
         {
             Either<int, string> either = 4;
 
-            var result = either.Map(s => s.First(c => char.ToUpperInvariant(c) == c) == 'H' ? '1' : '0');
+            var result = either.Map(MapOneToTwo);
 
             if (result is Left<int, char> left)
             {
