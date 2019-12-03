@@ -6,7 +6,7 @@ using System.Linq;
 namespace FunctionalTests.Option
 {
     [TestClass]
-    public class EnumerableExtensionsTests
+    public class OptionEnumerableExtensionsTests
     {
         [TestMethod]
         public void Flatten_ReturnsEntriesMatchingMap()

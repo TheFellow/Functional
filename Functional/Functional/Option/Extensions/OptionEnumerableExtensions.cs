@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Functional
 {
-    public static class EnumerableExtensions
+    public static class OptionEnumerableExtensions
     {
         public static IEnumerable<TResult> Flatten<T, TResult>(this IEnumerable<T> sequence, Func<T, Option<TResult>> map) =>
             sequence.Select(map)
