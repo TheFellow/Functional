@@ -6,6 +6,14 @@ namespace Functional
 {
     public static class OptionEnumerableExtensions
     {
+        /// <summary>
+        /// Reduces a sequence of TODO TODO
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="sequence"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
         public static IEnumerable<TResult> Flatten<T, TResult>(this IEnumerable<T> sequence, Func<T, Option<TResult>> map) =>
             sequence.Select(map)
                 .OfType<Some<TResult>>()

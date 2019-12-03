@@ -3,6 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Functional
 {
+    /// <summary>
+    /// Represents an instance of <typeparamref name="T"/> which is missing
+    /// </summary>
+    /// <typeparam name="T">The underlying type</typeparam>
     public sealed class None<T> : Option<T>, IEquatable<None<T>>, IEquatable<None>
     {
         public override string ToString() => "None";
@@ -20,8 +24,14 @@ namespace Functional
         public static bool operator !=([AllowNull] None a, [AllowNull] None<T> b) => !(a == b);
     }
 
+    /// <summary>
+    /// An untyped <see cref="None"/> whose <see cref="Value"/> property can be cast to any <see cref="None{T}"/>
+    /// </summary>
     public sealed class None : IEquatable<None>
     {
+        /// <summary>
+        /// A singleton None value
+        /// </summary>
         public static None Value { get; } = new None();
 
         private None() { }

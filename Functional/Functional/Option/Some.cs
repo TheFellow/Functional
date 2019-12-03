@@ -4,6 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Functional
 {
+    /// <summary>
+    /// Represents an instance of <typeparamref name="T"/> which is present
+    /// </summary>
+    /// <typeparam name="T">The underlying type</typeparam>
     public sealed class Some<T> : Option<T>, IEquatable<Some<T>>
     {
         public T Content { get; }
