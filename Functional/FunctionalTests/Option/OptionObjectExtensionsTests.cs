@@ -4,9 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FunctionalTests.Option
 {
     [TestClass]
-    public class ObjectExtensionsTests
+    public class OptionObjectExtensionsTests
     {
-        private const string _whenNone = "Replacement";
         private const string _sample = "Hello World";
 
         [TestMethod]

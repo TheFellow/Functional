@@ -6,7 +6,7 @@ using System.Linq;
 namespace FunctionalTests.Either
 {
     [TestClass]
-    public class ExtensionsTests
+    public class EitherExtensionsTests
     {
         [TestMethod]
         public void Reduce_WhenRight_ReturnsRight()

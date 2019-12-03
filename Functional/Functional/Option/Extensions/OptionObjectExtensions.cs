@@ -2,7 +2,7 @@
 
 namespace Functional
 {
-    public static class ObjectExtensions
+    public static class OptionObjectExtensions
     {
         public static Option<T> NoneIfNull<T>(this T obj) =>
             obj.When(!(obj is null));
