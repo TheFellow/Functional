@@ -1,5 +1,10 @@
 ﻿namespace Functional
 {
+    /// <summary>
+    /// The <see cref="Left{TLeft, TRight}"/> instance
+    /// </summary>
+    /// <typeparam name="TLeft">The Left type</typeparam>
+    /// <typeparam name="TRight">The Right type</typeparam>
     public sealed class Left<TLeft, TRight> : Either<TLeft, TRight>
     {
         public TLeft Content { get; }
