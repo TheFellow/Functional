@@ -1,5 +1,6 @@
 ﻿using Demo.Model;
 using Functional;
+using System.Linq;
 
 namespace Demo.OptionDemos
 {
@@ -7,16 +8,26 @@ namespace Demo.OptionDemos
     {
         public override string Type => "Option";
 
-        public override string Title => "IEnumerable<T>.FirstOrNone()";
+        public override string Title => "IEnumerable<T>.Flatten(Func<T, Option<T>)";
 
         protected override void DoDemo()
         {
-            Car[] cars = new Car[] { new Car("Bob's car", Color.Blue), new Car("Charles' Car", Color.Red) };
+            var cars = new Car[]
+            {
+                new Car("Bob's Car", Color.Blue),
+                new Car("Charles' Car", Color.Red),
+                new Car("Brad's Car", Color.Green)
+            };
 
-            var blueCar = cars.FirstOrNone(car => car.Color == Color.Blue);
-            var greenCar = cars.FirstOrNone(car => car.Color == Color.Green);
+            static Option<Car> carsWithB(Car car) =>
+                car.Name.Contains('B')
+                    ? car
+                    : (Option<Car>)None.Value;
 
-            Write($"{blueCar}, {greenCar}");
+            var BOwners = cars.Flatten(carsWithB);
+
+            Write(string.Join<Car>(", ", cars));
+            Write(string.Join(", ", BOwners));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Demo.Model;
-using Demo.OptionDemos;
+﻿using Demo.OptionDemos;
 using System;
 
 namespace Demo
@@ -23,7 +22,9 @@ namespace Demo
             .AddDemo(new MappingDemo())
             .AddDemo(new ReduceDemo())
             .AddDemo(new TeeDemo())
+            .AddDemo(new FirstOrNoneDemo())
             .AddDemo(new FlattenDemo())
+            .AddDemo(new TryGetValueDemo())
             ;
     }
 }
