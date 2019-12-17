@@ -31,6 +31,8 @@ namespace Demo
             .AddDemo(new EitherWhenDemo())
             .AddDemo(new EitherReduceDemo())
             .AddDemo(new EitherMapDemo())
+            .AddDemo(new EitherTeeDemo())
+            .AddDemo(new FirstOrDefaultDemo())
             ;
     }
 }
