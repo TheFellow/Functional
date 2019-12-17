@@ -9,7 +9,7 @@ namespace Demo
         static void Main(string[] _)
         {
             Console.WriteLine("== Functional Demo ==" + Environment.NewLine);
-            Console.WriteLine("Select a demo or press enter to quit." + Environment.NewLine);
+            Console.WriteLine("Select a demo (A for all) or press enter to quit." + Environment.NewLine);
 
             DemoHost demos = SetupDemos();
 

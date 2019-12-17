@@ -29,14 +29,22 @@ namespace Demo
             if (string.IsNullOrWhiteSpace(input))
                 return false;
 
-            DoDemo(input);
+            if (input.ToLower() == "a")
+            {
+                foreach (var key in Demos.Keys)
+                    DoDemo(key.ToString());
+            }
+            else
+            {
+                DoDemo(input);
+            }
 
             return true;
         }
 
         private void DoDemo(string input)
         {
-            if(int.TryParse(input, out int demoNumber) && Demos.ContainsKey(demoNumber))
+            if (int.TryParse(input, out int demoNumber) && Demos.ContainsKey(demoNumber))
             {
                 Demos[demoNumber].Run();
             }
