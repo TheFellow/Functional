@@ -3,7 +3,7 @@ using Functional;
 
 namespace Demo.OptionDemos
 {
-    public class ImplicitCastDemo : Demo
+    public class OptionImplicitCastDemo : Demo
     {
         public override string Type => "Option";
 

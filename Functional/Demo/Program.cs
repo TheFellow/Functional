@@ -1,4 +1,5 @@
-﻿using Demo.OptionDemos;
+﻿using Demo.EitherDemos;
+using Demo.OptionDemos;
 using System;
 
 namespace Demo
@@ -16,7 +17,7 @@ namespace Demo
         }
 
         private static DemoHost SetupDemos() => new DemoHost()
-            .AddDemo(new ImplicitCastDemo())
+            .AddDemo(new OptionImplicitCastDemo())
             .AddDemo(new OfTypeDemo())
             .AddDemo(new WhenDemo())
             .AddDemo(new NoneIfNullDemo())
@@ -26,6 +27,10 @@ namespace Demo
             .AddDemo(new FirstOrNoneDemo())
             .AddDemo(new FlattenDemo())
             .AddDemo(new TryGetValueDemo())
+            .AddDemo(new EitherImplicitCastDemo())
+            .AddDemo(new EitherWhenDemo())
+            .AddDemo(new EitherReduceDemo())
+            .AddDemo(new EitherMapDemo())
             ;
     }
 }

@@ -11,5 +11,7 @@
         public Left(TLeft content) => Content = content;
 
         public static implicit operator TLeft(Left<TLeft, TRight> either) => either.Content;
+
+        public override string ToString() => $"Left({Content})";
     }
 }
