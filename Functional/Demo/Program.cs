@@ -17,6 +17,7 @@ namespace Demo
 
         private static DemoHost SetupDemos() => new DemoHost()
             .AddDemo(new ImplicitCastDemo())
+            .AddDemo(new OfTypeDemo())
             .AddDemo(new WhenDemo())
             .AddDemo(new NoneIfNullDemo())
             .AddDemo(new MappingDemo())

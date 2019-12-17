@@ -4,9 +4,6 @@
     {
         public Color Color { get; set; }
 
-        public Vehicle(Color color)
-        {
-            Color = color;
-        }
+        public Vehicle(Color color) => Color = color;
     }
 }

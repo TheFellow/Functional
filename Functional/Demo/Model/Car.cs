@@ -2,11 +2,10 @@
 {
     public class Car : Vehicle
     {
-        public string Name => _name;
-        private readonly string _name;
+        public string Name { get; }
 
-        public Car(string name, Color color) : base(color) => _name = name;
+        public Car(string name, Color color) : base(color) => Name = name;
 
-        public override string ToString() => $"{_name} {Color}";
+        public override string ToString() => $"{Name} {Color}";
     }
 }
