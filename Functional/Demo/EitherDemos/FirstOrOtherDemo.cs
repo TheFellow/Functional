@@ -3,11 +3,11 @@ using Functional;
 
 namespace Demo.EitherDemos
 {
-    public class FirstOrDefaultDemo : Demo
+    public class FirstOrOtherDemo : Demo
     {
         public override string Type => "Either";
 
-        public override string Title => "IEnumerable<TRight>.FirstOrDefault(whenLeft)";
+        public override string Title => "IEnumerable<TRight>.FirstOrOther(whenLeft)";
 
         protected override void DoDemo()
         {
@@ -18,8 +18,8 @@ namespace Demo.EitherDemos
                 new Car("Dan's Car", Color.Red)
             };
 
-            var redVehicle = vehicles.FirstOrDefault(v => v.Color == Color.Red, new Car("No car", Color.Red));
-            var greenVehicle = vehicles.FirstOrDefault(v => v.Color == Color.Green, new Car("No car", Color.Green));
+            var redVehicle = vehicles.FirstOrOther(v => v.Color == Color.Red, new Car("No car", Color.Red));
+            var greenVehicle = vehicles.FirstOrOther(v => v.Color == Color.Green, new Car("No car", Color.Green));
 
             Write($"{redVehicle}, {greenVehicle}");
         }

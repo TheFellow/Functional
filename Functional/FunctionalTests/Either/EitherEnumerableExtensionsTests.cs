@@ -12,11 +12,11 @@ namespace FunctionalTests.Either
         private const string _empty = "Empty!";
 
         [TestMethod]
-        public void FirstOrDefaultOfStruct_WhenNonEmpty_ReturnsRight()
+        public void FirstOrOtherOfStruct_WhenNonEmpty_ReturnsRight()
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(_empty);
+            var result = seq.FirstOrOther(_empty);
 
             if (result is Right<string, int> right)
             {
@@ -29,11 +29,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefaultOfStruct_WhenEmpty_ReturnsLeft()
+        public void FirstOrOtherOfStruct_WhenEmpty_ReturnsLeft()
         {
             var seq = Enumerable.Empty<int>();
 
-            var result = seq.FirstOrDefault(_empty);
+            var result = seq.FirstOrOther(_empty);
 
             if (result is Left<string, int> left)
             {
@@ -46,11 +46,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefaultOfStruct_WhenEmpty_ReturnsLeftLazy()
+        public void FirstOrOtherOfStruct_WhenEmpty_ReturnsLeftLazy()
         {
             var seq = Enumerable.Empty<int>();
 
-            var result = seq.FirstOrDefault(() => _empty);
+            var result = seq.FirstOrOther(() => _empty);
 
             if (result is Left<string, int> left)
             {
@@ -63,11 +63,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefaultOfClass_WhenNonEmpty_ReturnsRight()
+        public void FirstOrOtherOfClass_WhenNonEmpty_ReturnsRight()
         {
             var seq = new[] { new Item { Value = 1 }, new Item { Value = 2 } };
 
-            var result = seq.FirstOrDefault(_empty);
+            var result = seq.FirstOrOther(_empty);
 
             if (result is Right<string, Item> right)
             {
@@ -80,11 +80,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefaultOfClass_WhenEmpty_ReturnsLeft()
+        public void FirstOrOtherOfClass_WhenEmpty_ReturnsLeft()
         {
             var seq = new Item[] { };
 
-            var result = seq.FirstOrDefault(_empty);
+            var result = seq.FirstOrOther(_empty);
 
             if (result is Left<string, Item> left)
             {
@@ -97,11 +97,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefaultOfClass_WhenEmpty_ReturnsLeftLazy()
+        public void FirstOrOtherOfClass_WhenEmpty_ReturnsLeftLazy()
         {
             var seq = new Item[] { };
 
-            var result = seq.FirstOrDefault(() => _empty);
+            var result = seq.FirstOrOther(() => _empty);
 
             if (result is Left<string, Item> left)
             {
@@ -114,11 +114,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefault_WithMatchingPredicate_ReturnsRight()
+        public void FirstOrOther_WithMatchingPredicate_ReturnsRight()
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i % 2 == 1, _empty);
+            var result = seq.FirstOrOther(i => i % 2 == 1, _empty);
 
             if (result is Right<string, int> right)
             {
@@ -131,11 +131,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefault_WithFailingPredicate_ReturnsLeft()
+        public void FirstOrOther_WithFailingPredicate_ReturnsLeft()
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i > 20, _empty);
+            var result = seq.FirstOrOther(i => i > 20, _empty);
 
             if (result is Left<string, int> left)
             {
@@ -148,11 +148,11 @@ namespace FunctionalTests.Either
         }
 
         [TestMethod]
-        public void FirstOrDefault_WithFailingPredicate_ReturnsLeftLazy()
+        public void FirstOrOther_WithFailingPredicate_ReturnsLeftLazy()
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i > 20, () => _empty);
+            var result = seq.FirstOrOther(i => i > 20, () => _empty);
 
             if (result is Left<string, int> left)
             {
