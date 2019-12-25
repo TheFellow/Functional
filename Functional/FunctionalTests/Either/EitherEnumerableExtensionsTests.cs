@@ -9,14 +9,14 @@ namespace FunctionalTests.Either
     {
         class Item { public int Value { get; set; } }
 
-        private const string empty = "Empty!";
+        private const string _empty = "Empty!";
 
         [TestMethod]
         public void FirstOrDefaultOfStruct_WhenNonEmpty_ReturnsRight()
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(empty);
+            var result = seq.FirstOrDefault(_empty);
 
             if (result is Right<string, int> right)
             {
@@ -33,11 +33,11 @@ namespace FunctionalTests.Either
         {
             var seq = Enumerable.Empty<int>();
 
-            var result = seq.FirstOrDefault(empty);
+            var result = seq.FirstOrDefault(_empty);
 
             if (result is Left<string, int> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
@@ -50,11 +50,11 @@ namespace FunctionalTests.Either
         {
             var seq = Enumerable.Empty<int>();
 
-            var result = seq.FirstOrDefault(() => empty);
+            var result = seq.FirstOrDefault(() => _empty);
 
             if (result is Left<string, int> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
@@ -67,7 +67,7 @@ namespace FunctionalTests.Either
         {
             var seq = new[] { new Item { Value = 1 }, new Item { Value = 2 } };
 
-            var result = seq.FirstOrDefault(empty);
+            var result = seq.FirstOrDefault(_empty);
 
             if (result is Right<string, Item> right)
             {
@@ -84,11 +84,11 @@ namespace FunctionalTests.Either
         {
             var seq = new Item[] { };
 
-            var result = seq.FirstOrDefault(empty);
+            var result = seq.FirstOrDefault(_empty);
 
             if (result is Left<string, Item> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
@@ -101,11 +101,11 @@ namespace FunctionalTests.Either
         {
             var seq = new Item[] { };
 
-            var result = seq.FirstOrDefault(() => empty);
+            var result = seq.FirstOrDefault(() => _empty);
 
             if (result is Left<string, Item> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
@@ -118,7 +118,7 @@ namespace FunctionalTests.Either
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i % 2 == 1, empty);
+            var result = seq.FirstOrDefault(i => i % 2 == 1, _empty);
 
             if (result is Right<string, int> right)
             {
@@ -135,11 +135,11 @@ namespace FunctionalTests.Either
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i > 20, empty);
+            var result = seq.FirstOrDefault(i => i > 20, _empty);
 
             if (result is Left<string, int> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
@@ -152,16 +152,63 @@ namespace FunctionalTests.Either
         {
             var seq = Enumerable.Range(4, 8);
 
-            var result = seq.FirstOrDefault(i => i > 20, () => empty);
+            var result = seq.FirstOrDefault(i => i > 20, () => _empty);
 
             if (result is Left<string, int> left)
             {
-                Assert.AreEqual(empty, left.Content);
+                Assert.AreEqual(_empty, left.Content);
             }
             else
             {
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void Map_AppliesFunctionOnlyToRightElements()
+        {
+            var seq = new Either<int, string>[] { 1, "two", 3 };
+
+            var result = seq
+                .Map(s => $"'{s}' is of length {s.Length}")
+                .Select(e => e.ToString())
+                .ToArray();
+
+            var expected = new Either<int, string>[] { 1, "'two' is of length 3", 3 }
+                .Select(e => e.ToString())
+                .ToArray();
+
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void Reduce_ReplacesLeftValues_WithRightConstant()
+        {
+            var seq = new Either<int, string>[] { 1, "two", 3 };
+
+            var result = seq.Reduce("Number").ToArray();
+
+            CollectionAssert.AreEqual(new string[] { "Number", "two", "Number" }, result);
+        }
+
+        [TestMethod]
+        public void Reduce_ReplacesLeftValues_WithRightLazy()
+        {
+            var seq = new Either<int, string>[] { 1, "two", 3 };
+
+            var result = seq.Reduce(() => "Number").ToArray();
+
+            CollectionAssert.AreEqual(new string[] { "Number", "two", "Number" }, result);
+        }
+
+        [TestMethod]
+        public void Reduce_ReplacesLeftValues_WithFunctionOfLeft()
+        {
+            var seq = new Either<int, string>[] { 1, "two", 3 };
+
+            var result = seq.Reduce(i => i.ToString()).ToArray();
+
+            CollectionAssert.AreEqual(new string[] { "1", "two", "3" }, result);
         }
     }
 }
