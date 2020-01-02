@@ -1,5 +1,4 @@
-﻿using Functional;
-using Functional.Optional;
+﻿using Functional.Option;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

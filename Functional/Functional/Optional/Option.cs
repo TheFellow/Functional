@@ -1,4 +1,4 @@
-﻿namespace Functional.Optional
+﻿namespace Functional.Option
 {
     /// <summary>
     /// <see cref="Option{T}"/> represents an instance of <typeparamref name="T"/>

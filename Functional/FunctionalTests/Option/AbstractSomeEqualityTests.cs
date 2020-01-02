@@ -1,4 +1,4 @@
-﻿using Functional.Optional;
+﻿using Functional.Option;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;

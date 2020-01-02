@@ -1,5 +1,5 @@
 ﻿using Demo.Model;
-using Functional.Optional;
+using Functional.Option;
 
 namespace Demo.OptionDemos
 {

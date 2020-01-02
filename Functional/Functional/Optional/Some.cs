@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Functional.Optional
+namespace Functional.Option
 {
     /// <summary>
     /// Represents an instance of <typeparamref name="T"/> which is present

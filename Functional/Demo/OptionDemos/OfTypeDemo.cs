@@ -1,5 +1,5 @@
 ﻿using Demo.Model;
-using Functional.Optional;
+using Functional.Option;
 using System.Linq;
 
 namespace Demo.OptionDemos

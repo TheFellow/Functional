@@ -1,4 +1,4 @@
-﻿using Functional.Optional;
+﻿using Functional.Option;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Functional.Optional
+namespace Functional.Option
 {
     public static class OptionEnumerableExtensions
     {
