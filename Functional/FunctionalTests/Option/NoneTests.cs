@@ -1,4 +1,4 @@
-using Functional;
+using Functional.Optional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FunctionalTests.Option

@@ -1,4 +1,4 @@
-﻿using Functional;
+﻿using Functional.Optional;
 using System.Collections.Generic;
 
 namespace Demo.OptionDemos

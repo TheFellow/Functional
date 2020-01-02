@@ -1,4 +1,4 @@
-﻿namespace Functional
+﻿namespace Functional.Either
 {
     /// <summary>
     /// The <see cref="Left{TLeft, TRight}"/> instance

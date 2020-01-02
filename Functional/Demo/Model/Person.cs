@@ -1,4 +1,4 @@
-﻿using Functional;
+﻿using Functional.Optional;
 
 namespace Demo.Model
 {

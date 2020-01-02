@@ -1,4 +1,4 @@
-﻿namespace Functional
+﻿namespace Functional.Optional
 {
     /// <summary>
     /// <see cref="Option{T}"/> represents an instance of <typeparamref name="T"/>
@@ -17,8 +17,8 @@
         /// <typeparam name="TNew">The new type of the <see cref="Option{T}"/></typeparam>
         /// <returns></returns>
         public Option<TNew> OfType<TNew>() where TNew : class =>
-            this is Some<T> some && (some.Content as TNew != null)
-                ? (Option<TNew>)new Some<TNew>((some.Content as TNew)!)  
+            this is Some<T> some && some.Content as TNew != null
+                ? (Option<TNew>)new Some<TNew>((some.Content as TNew)!)
                 : None.Value;
     }
 }

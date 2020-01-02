@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Functional
+namespace Functional.Optional
 {
     /// <summary>
     /// Represents an instance of <typeparamref name="T"/> which is missing
@@ -13,14 +13,14 @@ namespace Functional
 
         public bool Equals([AllowNull] None<T> other) => !(other is null);
         public bool Equals([AllowNull] None other) => !(other is null);
-        public override bool Equals(object? obj) => !(obj is null) && ((obj is None<T>) || (obj is None));
+        public override bool Equals(object? obj) => !(obj is null) && (obj is None<T> || obj is None);
         public override int GetHashCode() => 0;
 
-        public static bool operator ==([AllowNull] None<T> a, [AllowNull] None<T> b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator ==([AllowNull] None<T> a, [AllowNull] None<T> b) => a is null && b is null || (a?.Equals(b) ?? false);
         public static bool operator !=([AllowNull] None<T> a, [AllowNull] None<T> b) => !(a == b);
-        public static bool operator ==([AllowNull] None<T> a, [AllowNull] None b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator ==([AllowNull] None<T> a, [AllowNull] None b) => a is null && b is null || (a?.Equals(b) ?? false);
         public static bool operator !=([AllowNull] None<T> a, [AllowNull] None b) => !(a == b);
-        public static bool operator ==([AllowNull] None a, [AllowNull] None<T> b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator ==([AllowNull] None a, [AllowNull] None<T> b) => a is null && b is null || (a?.Equals(b) ?? false);
         public static bool operator !=([AllowNull] None a, [AllowNull] None<T> b) => !(a == b);
     }
 
@@ -37,17 +37,17 @@ namespace Functional
         private None() { }
 
         public override string ToString() => "None";
-        
+
         public bool Equals([AllowNull] None other) => !(other is null);
         public override bool Equals(object? obj) =>
-            !(obj is null) && ((obj is None) || this.IsGenericNone(obj.GetType()));
+            !(obj is null) && (obj is None || this.IsGenericNone(obj.GetType()));
         public override int GetHashCode() => 0;
 
         private bool IsGenericNone(Type type) =>
             type.GenericTypeArguments.Length == 1 &&
             typeof(None<>).MakeGenericType(type.GenericTypeArguments[0]) == type;
 
-        public static bool operator ==([AllowNull] None a, [AllowNull] None b) => (a is null && b is null) || (a?.Equals(b) ?? false);
+        public static bool operator ==([AllowNull] None a, [AllowNull] None b) => a is null && b is null || (a?.Equals(b) ?? false);
         public static bool operator !=([AllowNull] None a, [AllowNull] None b) => !(a == b);
     }
 }

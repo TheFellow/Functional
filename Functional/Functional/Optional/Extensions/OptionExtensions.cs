@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Functional
+namespace Functional.Optional
 {
     public static class OptionExtensions
     {

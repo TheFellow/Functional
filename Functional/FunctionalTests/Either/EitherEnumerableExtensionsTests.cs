@@ -1,4 +1,5 @@
 ﻿using Functional;
+using Functional.Either;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

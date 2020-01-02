@@ -1,4 +1,4 @@
-﻿namespace Functional
+﻿namespace Functional.Either
 {
     /// <summary>
     /// Represents a value that is one of two types <typeparamref name="TLeft"/> or <typeparamref name="TRight"/>

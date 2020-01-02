@@ -1,5 +1,6 @@
 ﻿using Demo.Model;
 using Functional;
+using Functional.Either;
 
 namespace Demo.EitherDemos
 {

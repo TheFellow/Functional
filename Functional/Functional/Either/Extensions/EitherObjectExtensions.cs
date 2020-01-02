@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Functional
+namespace Functional.Either
 {
     public static class EitherObjectExtensions
     {

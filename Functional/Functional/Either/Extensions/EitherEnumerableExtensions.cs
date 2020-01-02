@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Functional.Optional;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Functional
+namespace Functional.Either
 {
     public static class EitherEnumerableExtensions
     {

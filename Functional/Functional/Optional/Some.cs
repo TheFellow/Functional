@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Functional
+namespace Functional.Optional
 {
     /// <summary>
     /// Represents an instance of <typeparamref name="T"/> which is present
@@ -20,7 +20,7 @@ namespace Functional
         public bool Equals([AllowNull] Some<T> other)
         {
             if (other is null) return false;
-            if (object.ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(this, other)) return true;
             return EqualityComparer<T>.Default.Equals(Content, other.Content);
         }
         public override bool Equals(object? obj)
@@ -32,7 +32,7 @@ namespace Functional
 
         public override int GetHashCode() => EqualityComparer<T>.Default.GetHashCode(Content);
 
-        public static bool operator ==(Some<T> a, Some<T> b) => (a is null && b is null) || (!(a is null) && a.Equals(b));
+        public static bool operator ==(Some<T> a, Some<T> b) => a is null && b is null || !(a is null) && a.Equals(b);
         public static bool operator !=(Some<T> a, Some<T> b) => !(a == b);
     }
 }
