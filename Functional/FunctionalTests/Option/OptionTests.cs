@@ -55,5 +55,48 @@ namespace FunctionalTests.Option
 
             Assert.IsInstanceOfType(converted, typeof(None<MyType1>));
         }
+
+        [TestMethod]
+        public void OptionOfT_BehavesAsAValueTypeForEquality()
+        {
+            Option<int> some1 = 5;
+            Option<int> some2 = 5;
+
+            Assert.AreEqual(some1, some2);
+            Assert.IsTrue(some1.Equals(some2));
+            Assert.IsTrue(some1 == some2);
+            Assert.IsTrue(some2 == some1);
+            Assert.IsTrue(some1.GetHashCode() == some2.GetHashCode());
+            Assert.IsFalse(some1 != some2);
+            Assert.IsFalse(some2 != some1);
+        }
+
+        [TestMethod]
+        public void Option_EqualsOption_WhenSomeWithSameContent()
+        {
+            Option<int> option1 = 5;
+            Option<int> option2 = 5;
+
+            Assert.IsTrue(option1.Equals(option2));
+            Assert.IsTrue(option2.Equals(option1));
+            Assert.IsTrue(option1 == option2);
+            Assert.IsTrue(option2 == option1);
+            Assert.IsFalse(option1 != option2);
+            Assert.IsFalse(option2 != option1);
+        }
+
+        [TestMethod]
+        public void Option_DoesNotEqualOption_WhenSomeWithDifferentContent()
+        {
+            Option<int> option1 = 4;
+            Option<int> option2 = 5;
+
+            Assert.IsFalse(option1.Equals(option2));
+            Assert.IsFalse(option2.Equals(option1));
+            Assert.IsFalse(option1 == option2);
+            Assert.IsFalse(option2 == option1);
+            Assert.IsTrue(option1 != option2);
+            Assert.IsTrue(option2 != option1);
+        }
     }
 }
