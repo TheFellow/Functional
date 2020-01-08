@@ -19,6 +19,13 @@ namespace Functional.Either
             either is Right<TLeft, TRight> right ? right.Content : whenLeft();
 
         /// <summary>
+        /// Reduces an <see cref="Either{TLeft, TRight}"/> to the <typeparamref name="TRight"/> type
+        /// by providing a substitute value to use <paramref name="whenLeft"/>
+        /// </summary>
+        public static TRight Reduce<TLeft, TRight>(this Either<TLeft, TRight> either, Func<TLeft, TRight> whenleft) =>
+            either is Right<TLeft, TRight> right ? right.Content : whenleft((Left<TLeft, TRight>)either);
+
+        /// <summary>
         /// Applies a function to the <typeparamref name="TRight"/> type if the <see cref="Either{TLeft, TRight}"/> is a <see cref="Right{TLeft, TRight}"/>
         /// </summary>
         public static Either<TLeft, TNewRight> Map<TLeft, TRight, TNewRight>(this Either<TLeft, TRight> either, Func<TRight, TNewRight> map) =>

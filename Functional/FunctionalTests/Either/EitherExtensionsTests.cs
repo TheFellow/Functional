@@ -48,6 +48,26 @@ namespace FunctionalTests.Either
             Assert.AreEqual("Replacement", result);
         }
 
+        [TestMethod]
+        public void ReduceWithFuncOfLeft_WhenRight_ReturnsRight()
+        {
+            Either<int, string> either = "Hello World";
+
+            var result = either.Reduce(i => "Replacement");
+
+            Assert.AreEqual("Hello World", result);
+        }
+
+        [TestMethod]
+        public void ReduceWithFuncOfLeft_WhenLeft_ReturnsReplacement()
+        {
+            Either<int, string> either = 4;
+
+            var result = either.Reduce(i => i.ToString());
+
+            Assert.AreEqual("4", result);
+        }
+
         #endregion
 
         #region Map Tests
