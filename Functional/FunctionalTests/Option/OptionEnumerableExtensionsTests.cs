@@ -22,6 +22,17 @@ namespace FunctionalTests.Option
         }
 
         [TestMethod]
+        public void Flatten_SequenceOfOptions_ReturnsSequenceOfContent()
+        {
+            var values = Enumerable.Range(0, 6);
+
+            var result = values.Select(i => i % 2 == 0 ? new Some<string>(i.ToString()) : (Option<string>)None.Value)
+                .Flatten();
+
+            Assert.IsTrue(result.SequenceEqual(new string[] { "0", "2", "4" }));
+        }
+
+        [TestMethod]
         public void FirstOrNone_OnEmptySequence_IsNone()
         {
             var result = Enumerable.Empty<int>().FirstOrNone();
