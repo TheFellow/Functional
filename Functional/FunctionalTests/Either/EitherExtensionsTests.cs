@@ -1,5 +1,6 @@
 ﻿using Functional.Either;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace FunctionalTests.Either
 {
@@ -77,7 +78,7 @@ namespace FunctionalTests.Either
         {
             Either<int, string> either = "Hello World";
 
-            var result = either.Map(s => s + "!");
+            var result = either.Map((string s) => s + "!");
 
             if (result is Right<int, string> right)
             {
@@ -94,7 +95,7 @@ namespace FunctionalTests.Either
         {
             Either<int, string> either = 4;
 
-            var result = either.Map(s => s + "!");
+            var result = either.Map((string s) => s + "!");
 
             if (either is Left<int, string> left)
             {
@@ -106,6 +107,7 @@ namespace FunctionalTests.Either
             }
         }
 
+        // Two track Right function
         private static Either<int, char> MapOneToTwo(string str) =>
             str.StartsWith('H')
                 ? (Either<int, char>)str[0]
@@ -156,6 +158,97 @@ namespace FunctionalTests.Either
             if (result is Left<int, char> left)
             {
                 Assert.AreEqual(4, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapLeftOneTrackFunction_WhenRight_DoesNotApplyMap()
+        {
+            Either<int, string> either = "Hello World";
+
+            var result = either.MapLeft(i => i + 1);
+
+            if (result is Right<int, string> right)
+            {
+                Assert.AreEqual("Hello World", right.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapLeftOneTrackFunction_WhenLeft_ReturnsNewLeft()
+        {
+            Either<int, string> either = 4;
+
+            var result = either.MapLeft(i => i + 1);
+
+            if (result is Left<int, string> left)
+            {
+                Assert.AreEqual(5, left.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        // Two track Left function
+        private Either<double, string> TimesPi(int i) =>
+            i < 5
+                ? Math.PI * i
+                : (Either<double, string>)"Too big";
+
+        [TestMethod]
+        public void MapLeftTwoTrackFunction_WhenRight_DoesNotApplyMap()
+        {
+            Either<int, string> either = "Hello World";
+
+            var result = either.MapLeft(TimesPi);
+
+            if (result is Right<double, string> right)
+            {
+                Assert.AreEqual("Hello World", right.Content);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapLeftTwoTrackFunction_WhenLeftReturnsNewLeft_AppliesMap()
+        {
+            Either<int, string> either = 4;
+
+            var result = either.MapLeft(TimesPi);
+
+            if (result is Left<double, string> left)
+            {
+                Assert.AreEqual(12.57, left.Content, 0.01);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void MapLeftTwoTrackFunction_WhenLeftReturnsRight_ReturnsRight()
+        {
+            Either<int, string> either = 8;
+
+            var result = either.MapLeft(TimesPi);
+
+            if (result is Right<double, string> right)
+            {
+                Assert.AreEqual("Too big", right.Content);
             }
             else
             {
