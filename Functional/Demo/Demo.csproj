@@ -9,4 +9,8 @@
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ResultDemos\" />
+  </ItemGroup>
+
 </Project>
