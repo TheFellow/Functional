@@ -1,49 +1,54 @@
-﻿using Functional.Option;
-using System;
+﻿using System;
 
 namespace Functional.Results
 {
-    public sealed class Result<T>
+    /// <summary>
+    /// Represents the success or failure status of a command
+    /// </summary>
+    public class Result
     {
-        private readonly Option<T> _value;
-        private readonly string _message;
+        protected readonly bool _success;
+        protected readonly string _message = string.Empty;
 
-        internal Result(T value, string message, bool success)
+        private protected Result() => _success = true;
+        private protected Result(string message)
         {
-            _value = success ? (Option<T>)new Some<T>(value) : None.Value;
             _message = message;
+            _success = false;
         }
 
         public void OnOk(Action onOk)
         {
-            if (_value is Some<T>)
+            if (_success)
                 onOk();
-        }
-        
-        public void OnOk(Action<T> onOk)
-        {
-            if (_value is Some<T> some)
-                onOk(some.Content);
-        }
-
-        public void OnFail(Action onFail)
-        {
-            if (_value is None<T>)
-                onFail();
         }
 
         public void OnFail(Action<string> onFail)
         {
-            if (_value is None<T>)
+            if (!_success)
                 onFail(_message);
         }
+
+        public static Result Ok() => new Result();
+        public static Result Fail(string message) => new Result(message);
     }
 
-    public static class Result
+    /// <summary>
+    /// Represents the success or failure status of a query returning type <typeparamref name="T"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class Result<T> : Result
     {
-        public static Result<string> Ok() => new Result<string>("Ok", string.Empty, true);
-        public static Result<T> Ok<T>(T value) => new Result<T>(value, string.Empty, true);
-        public static Result<string> Fail() => new Result<string>(string.Empty, string.Empty, false);
-        public static Result<T> Fail<T>(string message) => new Result<T>(default!, message, false);
+        private readonly T _content;
+
+        private Result(T value) : base() => _content = value;
+
+        public void OnOk(Action<T> onOk)
+        {
+            if (_success)
+                onOk(_content);
+        }
+
+        public static Result<T> Ok(T value) => new Result<T>(value);
     }
 }

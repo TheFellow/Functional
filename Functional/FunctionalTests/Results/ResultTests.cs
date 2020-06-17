@@ -1,6 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Functional.Results;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+﻿using Functional.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace FunctionalTests.Results
@@ -28,8 +27,10 @@ namespace FunctionalTests.Results
             _message = message;
         }
 
+        private void SetCallbackInvoked() => SetCallbackInvoked(string.Empty);
+
         [TestMethod]
-        public void OnOk_WithOkResult_CallsAction()
+        public void OkResult_OnOk_CallsAction()
         {
             var result = Result.Ok();
 
@@ -39,11 +40,62 @@ namespace FunctionalTests.Results
         }
 
         [TestMethod]
-        public void OnOk_WithOkResult_PassesOriginalObjectToAction()
+        public void OkResult_OnFail_DoesNotCallAction()
+        {
+            var result = Result.Ok();
+
+            result.OnFail(SetCallbackInvoked);
+
+            Assert.IsFalse(_callbackInvoked);
+        }
+
+        [TestMethod]
+        public void FailResult_OnOk_DoesNotCallAction()
+        {
+            var result = Result.Fail(_failureMessage);
+
+            result.OnOk(SetCallbackInvoked);
+
+            Assert.IsFalse(_callbackInvoked);
+        }
+
+        [TestMethod]
+        public void FailResult_OnFail_CallsAction()
+        {
+            var result = Result.Fail(_failureMessage);
+
+            result.OnFail(SetCallbackInvoked);
+
+            Assert.IsTrue(_callbackInvoked);
+        }
+
+        [TestMethod]
+        public void FailResult_OnFail_PassesMessageToAction()
+        {
+            var result = Result.Fail(_failureMessage);
+
+            result.OnFail(SetCallbackInvoked);
+
+            Assert.AreEqual(_failureMessage, _message);
+        }
+
+        [TestMethod]
+        public void OkResultOfT_OnOk_CallsAction()
+        {
+            bool called = false;
+            var result = Result<MyClass>.Ok(new MyClass());
+
+            result.OnOk(mc => called = true);
+
+            Assert.IsTrue(called);
+        }
+
+        [TestMethod]
+        public void OkResultOfT_OnOk_PassesOriginalObjectToAction()
         {
             var myInstance = new MyClass();
             MyClass? returnedInstance = null;
-            var result = Result.Ok(myInstance);
+            var result = Result<MyClass>.Ok(myInstance);
 
             result.OnOk(mc => returnedInstance = mc);
 
@@ -52,66 +104,13 @@ namespace FunctionalTests.Results
         }
 
         [TestMethod]
-        public void OnOk_WithFailResult_DoesNotCallAction()
+        public void OkResultOfT_OnFail_DoesNotCallAction()
         {
-            var result = Result.Fail();
-
-            result.OnOk(SetCallbackInvoked);
-
-            Assert.IsFalse(_callbackInvoked);
-        }
-
-        [TestMethod]
-        public void OnOk_WithFailResultAndMessage_DoesNotCallAction()
-        {
-            var result = Result.Fail<MyClass>(_failureMessage);
-            MyClass? myInstance = null;
-
-            result.OnOk(mc => myInstance = mc);
-
-            Assert.IsFalse(_callbackInvoked);
-            Assert.IsNull(myInstance);
-        }
-
-        [TestMethod]
-        public void OnFail_WithOkResult_DoesNotCallAction()
-        {
-            var result = Result.Ok();
-
-            result.OnFail(SetCallbackInvoked);
-
-            Assert.IsFalse(_callbackInvoked);
-        }
-
-        [TestMethod]
-        public void OnFail_WithOkResultAndPayload_DoesNotCallAction()
-        {
-            var result = Result.Ok(new MyClass());
+            var result = Result<MyClass>.Ok(new MyClass());
 
             result.OnFail(_ => throw new ArgumentException());
 
             Assert.IsFalse(_callbackInvoked);
-        }
-
-        [TestMethod]
-        public void OnFail_WithFailResult_CallsAction()
-        {
-            var result = Result.Fail();
-
-            result.OnFail(SetCallbackInvoked);
-
-            Assert.IsTrue(_callbackInvoked);
-        }
-
-        [TestMethod]
-        public void OnFail_WithFailResult_CallsActionWithMessage()
-        {
-            var result = Result.Fail<MyClass>(_failureMessage);
-
-            result.OnFail(msg => SetCallbackInvoked(msg));
-
-            Assert.IsTrue(_callbackInvoked);
-            Assert.AreEqual(_failureMessage, _message);
         }
     }
 }
