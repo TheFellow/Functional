@@ -1,4 +1,4 @@
 ﻿namespace FunctionalTests.Results
 {
-    class MyClass { }
+    public class MyClass { }
 }
