@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Functional.Option;
+using System;
 
 namespace Functional.Results
 {
     /// <summary>
     /// Represents the success or failure status of a command
     /// </summary>
-    public class Result
+    public sealed class Result
     {
-        protected readonly bool _success;
-        protected readonly string _message = string.Empty;
+        private readonly bool _success;
+        private readonly string _message = string.Empty;
 
-        private protected Result() => _success = true;
-        private protected Result(string message)
+        private Result() => _success = true;
+        private Result(string message)
         {
             _message = message;
             _success = false;
@@ -31,24 +32,38 @@ namespace Functional.Results
 
         public static Result Ok() => new Result();
         public static Result Fail(string message) => new Result(message);
+        
     }
 
     /// <summary>
     /// Represents the success or failure status of a query returning type <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Result<T> : Result
+    public sealed class Result<T>
     {
-        private readonly T _content;
+        private readonly Option<T> _content;
+        private readonly string _message = string.Empty;
 
-        private Result(T value) : base() => _content = value;
+        private Result(T value) => _content = value;
+        private Result(string message)
+        {
+            _content = None.Value;
+            _message = message;
+        }
 
         public void OnOk(Action<T> onOk)
         {
-            if (_success)
-                onOk(_content);
+            if (_content is Some<T> some)
+                onOk(some.Content);
+        }
+
+        public void OnFail(Action<string> onFail)
+        {
+            if (_content == None.Value)
+                onFail(_message);
         }
 
         public static Result<T> Ok(T value) => new Result<T>(value);
+        public static Result<T> Fail(string message) => new Result<T>(message);
     }
 }

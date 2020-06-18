@@ -1,10 +1,8 @@
 ﻿using Functional.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace FunctionalTests.Results
 {
-    class MyClass { }
 
     [TestClass]
     public class ResultTests
@@ -77,40 +75,6 @@ namespace FunctionalTests.Results
             result.OnFail(SetCallbackInvoked);
 
             Assert.AreEqual(_failureMessage, _message);
-        }
-
-        [TestMethod]
-        public void OkResultOfT_OnOk_CallsAction()
-        {
-            bool called = false;
-            var result = Result<MyClass>.Ok(new MyClass());
-
-            result.OnOk(mc => called = true);
-
-            Assert.IsTrue(called);
-        }
-
-        [TestMethod]
-        public void OkResultOfT_OnOk_PassesOriginalObjectToAction()
-        {
-            var myInstance = new MyClass();
-            MyClass? returnedInstance = null;
-            var result = Result<MyClass>.Ok(myInstance);
-
-            result.OnOk(mc => returnedInstance = mc);
-
-            Assert.IsNotNull(returnedInstance);
-            Assert.AreEqual(myInstance, returnedInstance);
-        }
-
-        [TestMethod]
-        public void OkResultOfT_OnFail_DoesNotCallAction()
-        {
-            var result = Result<MyClass>.Ok(new MyClass());
-
-            result.OnFail(_ => throw new ArgumentException());
-
-            Assert.IsFalse(_callbackInvoked);
         }
     }
 }
