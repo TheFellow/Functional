@@ -12,6 +12,6 @@
 
         public static implicit operator TRight(Right<TLeft, TRight> either) => either.Content;
 
-        public override string ToString() => $"Right({Content})";
+        public override string ToString() => $"{typeof(TRight).Name}({Content})";
     }
 }
